@@ -1,0 +1,13 @@
+name = "DrawAllGraphs"
+uuid = "2441bc3f-3f69-4521-b105-3a24b968d4d0"
+authors = ["Atticus Thacker", "Max Grossman"]
+version = "1.0.0-DEV"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
