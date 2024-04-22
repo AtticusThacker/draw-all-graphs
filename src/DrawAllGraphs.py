@@ -1,5 +1,16 @@
-import 
+import itertools
+import math
 
+class GraphString:
+    def __init__(self, vertices, edges, string):
+        self.vertices = vertices
+        self.edges = edges
+        self.string = string
+
+
+test = GraphString(2, 1, [1])
+
+print(test)
 
 
 # Function that takes in number of edges q and number of vertices p.
