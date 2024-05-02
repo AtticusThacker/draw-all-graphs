@@ -3,6 +3,9 @@
 # For each permutation x in thge master list, compute all the isomorphic sequences and each time you find another isomorphic sequence, remove it from the master list if it is still there and place it into the list of sequences isomorphic x.
 # Return one element from each list of isomorphic sequences
 
+import math
+import networkx as nx 
+import matplotlib.pyplot as plt 
 import itertools
 
 class Graph:
@@ -109,12 +112,52 @@ def calculate_isomorphic_sequences(p, q):
   b = compute_binary_permutations(p, q)
   e = precompute_edge_relabellings(p,compute_vertex_relabellings(p))
   return print_one_of_each(group_isomorphic_sequences(b, e))
-  
+# -----------------------------------
+
+# Function to convert an index in the permutation to the corresponding edge (a, b)
+def index_to_edge(i):
+    sqrt_val = math.floor((1 + math.sqrt(8*i + 1)) / 2)
+    return (2*i + sqrt_val - sqrt_val**2) // 2, sqrt_val
 
 
-print(calculate_isomorphic_sequences(6, 8))
+# Defining a Class 
+class GraphVisualization: 
+
+    def __init__(self): 
+
+        # visual is a list which stores all  
+        # the set of edges that constitutes a 
+        # graph 
+        self.visual = [] 
+
+    # addEdge function inputs the vertices of an 
+    # edge and appends it to the visual list 
+    def addEdge(self, a, b): 
+        temp = [a, b] 
+        self.visual.append(temp) 
+
+    # In visualize function G is an object of 
+    # class Graph given by networkx G.add_edges_from(visual) 
+    # creates a graph with a given list 
+    # nx.draw_networkx(G) - plots the graph 
+    # plt.show() - displays the graph 
+    def visualize(self): 
+        G = nx.Graph() 
+        G.add_edges_from(self.visual) 
+        nx.draw_networkx(G) 
+        plt.show() 
 
 
-#todo: make a class that holds one string
-#implement each of these functions
-#implement a function to take one of these string classes and draw it
+def draw_graph(sequence):
+  G = GraphVisualization() 
+  for i in range(len(sequence)):
+    if sequence[i] == 1:
+      c=index_to_edge(i)
+      G.addEdge(c[0], c[1])
+  G.visualize() 
+
+graphs=calculate_isomorphic_sequences(6, 9)
+
+print(graphs)
+
+draw_graph(graphs[3])
