@@ -106,11 +106,13 @@ def save_dict_to_file(filename, perms_dict):
 # Check if two graphs are isomorphic
 def smart_isomorphic(graph1, graph2):
     if len(graph1) != len(graph2):
-        return False
+      return False
+    if graph1 == graph2:
+      return True
+    if graph1.count(0) != graph2.count(0):
+      return False
     a = computeDegreeSequence(graph1)
     b = computeDegreeSequence(graph2)
-    if graph1 == graph2:
-        return True
     if sorted(a) != sorted(b):
         return False
     else:
@@ -194,7 +196,7 @@ def compute_next_available_graphs():
     return compute_non_isomorphic_graphs(p, q)
 
 # Main computation
-graphs =  compute_non_isomorphic_graphs(8, 16)
+graphs =  compute_non_isomorphic_graphs(7, 16)
 # compute_non_isomorphic_graphs(8, 16)
 # compute_next_available_graphs()
 
