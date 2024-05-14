@@ -7,36 +7,57 @@ import math
 import networkx as nx 
 import matplotlib.pyplot as plt 
 import itertools
+import cProfile
+from bitarray import frozenbitarray
+import bitarray.util
 
 #from pyavl import AvlTree
 
 class BitGraph:
   def __init__(self, string):
-    self.string = string
+    #self.string = string
+    self.string = frozenbitarray(string)
 
   #this checks equality between two strings
+  # def __eq__(self, other):
+  #   #iterates through both lists simultaneously
+  #   for i,j in zip(self.string, other.string):
+  #     if i ^ j:
+  #       return False
+  #   return True
+
+  # def __eq__(self, other):
+  #   x = self.string ^ other.string
+  #   return x.any()
+
   def __eq__(self, other):
-    #iterates through both lists simultaneously
-    for i,j in zip(self.string, other.string):
-      if i ^ j:
-        return False
-    return True
+    return bitarray.util.count_xor(self.string, other.string) == 0
 
   #hashes the bitgraph to an integer
+  # def __hash__(self):
+  #   res = 0
+  #   for ele in self.string:
+  #     res = (res << 1) | ele
+  #   return res
+
   def __hash__(self):
-    res = 0
-    for ele in self.string:
-      res = (res << 1) | ele
-    return res
+    return self.string.__hash__()
 
   #finds all unique, isomorphic bitgraphs to this one
+  # def isomorphic_sequences(self, edge_relabellings):
+  #   isomorphic_sequences = set()
+  #   for permutation in edge_relabellings:
+  #     new_array = []
+  #     for i in range(len(self.string)):
+  #       new_array.append(self.string[permutation[i]])
+  #     isomorphic_sequences.add(BitGraph(new_array))
+  #   return isomorphic_sequences
+
   def isomorphic_sequences(self, edge_relabellings):
     isomorphic_sequences = set()
     for permutation in edge_relabellings:
-      new_array = []
-      for i in range(len(self.string)):
-        new_array.append(self.string[permutation[i]])
-      isomorphic_sequences.add(BitGraph(new_array))
+      m = map(lambda p : self.string[p] , permutation)
+      isomorphic_sequences.add(BitGraph(m))
     return isomorphic_sequences
 
   def len(self):
@@ -194,9 +215,17 @@ def draw_graph(graph):
       G.addEdge(c[0], c[1])
   G.visualize() 
 
-graphs=calculate_isomorphic_sequences(8, 12)
+#cProfile.run('calculate_isomorphic_sequences(6, 9)')
+#e = precompute_edge_relabellings(6)
+#cProfile.run('for i in range(10000): x = BitGraph([1,1,0,0,0,1,0,0,1,1,1,0,0,1,1]).isomorphic_sequences(e)')
+#BitGraph([1,1,0,0,0,1,0,0,1,1,1,0,0,1,1]).isomorphic_sequences(precompute_edge_relabellings(6))
+graphs=calculate_isomorphic_sequences(8, 10)
 
-print(graphs)
+#print(graphs)
 
 for i in range(min(10,len(graphs))):
     draw_graph(graphs[i])
+
+# for i in range(len(graphs)):
+#   draw_graph(graphs[i])
+
