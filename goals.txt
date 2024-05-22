@@ -1,0 +1,21 @@
+1)improve performance
+    a) rewrite in c
+        i) find resources to learn c
+        ii) lay out c learning timeline 
+    b) keep with memoized recursion
+2)create a table of graphs 
+    a) improve display
+    b) specialize drawing commands
+    c) maybe write custom graph drawing code?
+3) practicality?
+    a) write c library for python
+        i) make list of useful functions that can come from this code
+        ii) find out how to write a c library for python
+        iii) find out how to make a library public 
+
+hw for Atticus: 
+performance a, i and ii
+start with:
+https://www.youtube.com/playlist?list=PLhQjrBD2T382_R182iC2gNZI9HzWFMC_8
+
+
